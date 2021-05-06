@@ -61,7 +61,6 @@
   }
 
   // contenitore dischi
-
   .main-cont {
     width: 93vw;
     margin: auto;
@@ -71,9 +70,39 @@
   // componente disco
   .disc-comp {
     background-color: $header-col;
-    flex-basis: calc(100% / 8 - 15px);
     height: 35vh;
     margin-right: 15px;
     margin-bottom: 10px;
+    flex-basis: calc(100% / 8 - 15px);
+    @include media-desk-first(full-desktop) {
+      flex-basis: calc(100% / 7 - 15px);
+    }
+    @include media-desk-first(desktop) {
+      flex-basis: calc(100% / 6 - 15px);
+    }
+    @include media-desk-first(s-desktop) {
+      flex-basis: calc(100% / 5 - 15px);
+    }
+    @include media-desk-first(xs-desktop) {
+      flex-basis: calc(100% / 4 - 15px);
+    }
+    @include media-desk-first(l-tablet) {
+      flex-basis: calc(100% / 3 - 15px);
+      height: 40vh;
+    }
+    @include media-desk-first(tablet) {
+      flex-basis: calc(100% / 2 - 15px);
+      height: 45vh;
+    }
+    @include media-desk-first(s-tablet) {
+      flex-basis: calc(100% / 1 - 15px);
+      height: 63vh;
+    }
+    @include media-desk-first(xs-tablet) {
+      height: 52vh;
+    }
+    @include media-desk-first(phone) {
+      height: 57vh;
+    }
   }
 </style>

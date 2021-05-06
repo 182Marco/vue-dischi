@@ -31,14 +31,26 @@
 
   .box-img {
     @include width-height(80%, 40%);
+    overflow: hidden;
     margin: 10% auto 0;
+    @include media-desk-first(l-tablet) {
+      height: 48%;
+    }
+    @include media-desk-first(l-tablet) {
+      height: 55%;
+    }
+    @include media-desk-first(s-tablet) {
+      height: 65%;
+    }
+    @include media-desk-first(phone) {
+      height: 60%;
+    }
   }
   h2 {
     color: $light-txt;
     font-size: 0.9rem;
     font-weight: 300;
     text-transform: uppercase;
-    margin-top: 20px 0 0;
   }
   p {
     color: $grey-txt;
