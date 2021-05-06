@@ -39,7 +39,6 @@
           .get('https://flynn.boolean.careers/exercises/api/array/music')
           .then(re => {
             this.albums = re.data.response;
-            console.log(this.albums);
           });
       },
     },
