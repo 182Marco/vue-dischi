@@ -1,9 +1,9 @@
 <template>
-  <div class="wrap">
+  <div v-show="showAll === true || album.like" class="wrap">
     <div class="box-img">
       <img :src="album.poster" :alt="album.title" />
     </div>
-    <h2>{{ album.title }}</h2>
+    <h3>{{ album.title }}</h3>
     <p>{{ album.author }}</p>
     <p>{{ album.year }}</p>
     <p>{{ album.genre }}</p>
@@ -23,7 +23,7 @@
 <script>
   export default {
     name: 'Disc',
-    props: ['album'],
+    props: ['album', 'showAll'],
   };
 </script>
 
@@ -57,7 +57,7 @@
       height: 60%;
     }
   }
-  h2 {
+  h3 {
     color: $light-txt;
     font-size: 0.9rem;
     font-weight: 300;

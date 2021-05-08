@@ -6,12 +6,13 @@
     <div class="main-cont forTitle">
       <details>
         <summary> <h2>Click to see all your albums:</h2></summary>
-        <div class="main-cont ">
+        <div class="main-cont">
           <Disc
             v-for="(album, i) in albums"
             :key="i"
             class="disc-comp"
             :album="album"
+            :showAll="true"
           ></Disc>
         </div>
       </details>
@@ -19,11 +20,15 @@
     <div class="main-cont forTitle">
       <details>
         <summary> <h2>Click to see just the albums you like!</h2></summary>
-        <p>
-          Epcot is a theme park at Walt Disney World Resort featuring exciting
-          attractions, international pavilions, award-winning fireworks and
-          seasonal special events.
-        </p>
+        <div class="main-cont">
+          <Disc
+            v-for="(album, i) in albums"
+            :key="i"
+            class="disc-comp"
+            :album="album"
+            :showAll="false"
+          ></Disc>
+        </div>
       </details>
     </div>
   </div>
@@ -55,12 +60,10 @@
           .then(re => {
             // aggiungere una proprità like ai dati
             this.addLikeProp(re.data.response);
-            console.warn(re.data.response);
           });
       },
       addLikeProp(rowData) {
         this.albums = rowData.map(obj => ({ ...obj, like: false }));
-        console.log(this.albums);
       },
     },
   };
