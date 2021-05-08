@@ -3,9 +3,13 @@
     <HeaderComp>
       <img class="header-logo" src="@/assets/logo.png" alt="logo" />
     </HeaderComp>
-    <SelectComp :generi="generi" />
+    <!-- x ricordare la sintassi quando copierò da mie vecchie repositories -->
+    <!-- VERSIONE CON FUNZIONE IN SCRIPT -->
+    <!-- <SelectComp @changeSelected="chngeSelection($event)" :generi="generi" /> -->
+    <!-- VERSIONE CON FUNZIONE DIRETTAMENTE IN HTML -->
+    <SelectComp @changeSelected="select = $event" :generi="generi" />
     <div class="main-cont forTitle">
-      <HideShow>
+      <HideShow :title="'Click to see all your albums:'">
         <Disc
           v-for="(album, i) in albums"
           :key="i"
@@ -16,7 +20,7 @@
       </HideShow>
     </div>
     <div class="main-cont forTitle">
-      <HideShow>
+      <HideShow :title="'Click to see just the albums you like!'">
         <Disc
           v-for="(album, i) in albums"
           :key="i"
@@ -26,6 +30,9 @@
         ></Disc>
       </HideShow>
     </div>
+    <button @click="prova">
+      vediamo se ha funzionato il cazzo di emit
+    </button>
   </div>
 </template>
 
@@ -49,6 +56,7 @@
       return {
         albums: [],
         generi: [],
+        select: null,
       };
     },
     created() {
@@ -72,6 +80,13 @@
         this.generi = rowData
           .map(e => e.genre)
           .filter((e, i, a) => a.indexOf(e) === i);
+      },
+      // VERSIONE CON FUNZIONE IN SCRIPT
+      // chngeSelection(slected) {
+      //   this.select = slected;
+      // },
+      prova() {
+        console.log(this.select);
       },
     },
   };

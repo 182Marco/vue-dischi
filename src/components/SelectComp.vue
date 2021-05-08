@@ -2,7 +2,12 @@
   <div class="container">
     <label for="choseType">Choose a musical genre</label>
     <div class="wrap">
-      <select v-model="selected" name="" id="choseType">
+      <select
+        @change="$emit('changeSelected', selected)"
+        v-model="selected"
+        name=""
+        id="choseType"
+      >
         <option v-for="(e, i) in generi" :key="i">{{ e }}</option>
       </select>
     </div>

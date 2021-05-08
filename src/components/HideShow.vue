@@ -1,6 +1,8 @@
 <template>
   <details>
-    <summary> <h2>Click to see just the albums you like!</h2></summary>
+    <summary>
+      <h2>{{ title }}</h2></summary
+    >
     <div class="main-cont">
       <slot></slot>
     </div>
@@ -10,7 +12,7 @@
 <script>
   export default {
     name: 'HideShow',
-    props: [],
+    props: ['title'],
   };
 </script>
 
