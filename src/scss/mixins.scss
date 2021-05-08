@@ -57,3 +57,33 @@
     }
   }
 }
+
+//costruzione di triangoli equilateri con mixin
+@mixin equilateral-triangle($direction: right, $size: 30px, $color: $brand) {
+  width: 0;
+  height: 0;
+  @if $direction == 'up' {
+    border-left: ($size) solid transparent;
+    border-right: ($size) solid transparent;
+    border-bottom: ($size) solid $color;
+  } @else if $direction == 'down' {
+    border-left: ($size) solid transparent;
+    border-right: ($size) solid transparent;
+    border-top: ($size) solid $color;
+  } @else if $direction == 'right' {
+    border-top: ($size) solid transparent;
+    border-bottom: ($size) solid transparent;
+    border-left: ($size) solid $color;
+  } @else if $direction == 'left' {
+    border-top: ($size) solid transparent;
+    border-bottom: ($size) solid transparent;
+    border-right: ($size) solid $color;
+  }
+}
+//*** fine costruzione triangoli
+
+@mixin pseudo($display: inline-block, $pos: absolute, $content: '') {
+  content: $content;
+  display: $display;
+  position: $pos;
+}

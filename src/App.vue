@@ -3,34 +3,28 @@
     <HeaderComp>
       <img class="header-logo" src="@/assets/logo.png" alt="logo" />
     </HeaderComp>
-    <SelectComp :albums="albums" />
+    <SelectComp :generi="generi" />
     <div class="main-cont forTitle">
-      <details>
-        <summary> <h2>Click to see all your albums:</h2></summary>
-        <div class="main-cont">
-          <Disc
-            v-for="(album, i) in albums"
-            :key="i"
-            class="disc-comp"
-            :album="album"
-            :showAll="true"
-          ></Disc>
-        </div>
-      </details>
+      <HideShow>
+        <Disc
+          v-for="(album, i) in albums"
+          :key="i"
+          class="disc-comp"
+          :album="album"
+          :showAll="true"
+        ></Disc>
+      </HideShow>
     </div>
     <div class="main-cont forTitle">
-      <details>
-        <summary> <h2>Click to see just the albums you like!</h2></summary>
-        <div class="main-cont">
-          <Disc
-            v-for="(album, i) in albums"
-            :key="i"
-            class="disc-comp"
-            :album="album"
-            :showAll="false"
-          ></Disc>
-        </div>
-      </details>
+      <HideShow>
+        <Disc
+          v-for="(album, i) in albums"
+          :key="i"
+          class="disc-comp"
+          :album="album"
+          :showAll="false"
+        ></Disc>
+      </HideShow>
     </div>
   </div>
 </template>
@@ -39,6 +33,8 @@
   import Disc from '@/components/Disc.vue';
   import HeaderComp from '@/components/HeaderComp.vue';
   import SelectComp from '@/components/SelectComp.vue';
+  import HideShow from '@/components/HideShow.vue';
+
   import axios from 'axios';
 
   export default {
@@ -47,6 +43,7 @@
       Disc,
       HeaderComp,
       SelectComp,
+      HideShow,
     },
     data() {
       return {
