@@ -3,6 +3,7 @@
     <HeaderComp>
       <img class="header-logo" src="@/assets/logo.png" alt="logo" />
     </HeaderComp>
+    <SelectComp :albums="albums" />
     <div class="main-cont forTitle">
       <details>
         <summary> <h2>Click to see all your albums:</h2></summary>
@@ -37,6 +38,7 @@
 <script>
   import Disc from '@/components/Disc.vue';
   import HeaderComp from '@/components/HeaderComp.vue';
+  import SelectComp from '@/components/SelectComp.vue';
   import axios from 'axios';
 
   export default {
@@ -44,10 +46,12 @@
     components: {
       Disc,
       HeaderComp,
+      SelectComp,
     },
     data() {
       return {
         albums: [],
+        generi: [],
       };
     },
     created() {
@@ -60,10 +64,17 @@
           .then(re => {
             // aggiungere una proprità like ai dati
             this.addLikeProp(re.data.response);
+            // ottenere array con solo generi senza ripetizioni
+            this.createArOfGen(re.data.response);
           });
       },
       addLikeProp(rowData) {
-        this.albums = rowData.map(obj => ({ ...obj, like: false }));
+        this.albums = rowData.map(e => ({ ...e, like: false }));
+      },
+      createArOfGen(rowData) {
+        this.generi = rowData
+          .map(e => e.genre)
+          .filter((e, i, a) => a.indexOf(e) === i);
       },
     },
   };

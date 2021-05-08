@@ -1,13 +1,16 @@
 <template>
   <div>
-    <slot></slot>
+    <label for="choseType"></label>
+    <select name="" id="choseType">
+      <option>kind</option>
+    </select>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'Header',
-    props: [],
+    name: 'SelectComp',
+    props: ['albums'],
   };
 </script>
 
@@ -15,9 +18,9 @@
   @import '@/scss/var';
   @import '@/scss/reset';
   @import '@/scss/mixins';
+
   div {
-    background-color: $header-col;
-    height: 9vh;
-    @include flex(row, flex-start);
+    background-color: red;
+    height: 10vh;
   }
 </style>
