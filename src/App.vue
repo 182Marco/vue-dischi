@@ -3,13 +3,28 @@
     <HeaderComp>
       <img class="header-logo" src="@/assets/logo.png" alt="logo" />
     </HeaderComp>
-    <div class="main-cont">
-      <Disc
-        v-for="(album, i) in albums"
-        :key="i"
-        class="disc-comp"
-        :album="album"
-      ></Disc>
+    <div class="main-cont forTitle">
+      <details>
+        <summary> <h2>Click to see all your albums:</h2></summary>
+        <div class="main-cont ">
+          <Disc
+            v-for="(album, i) in albums"
+            :key="i"
+            class="disc-comp"
+            :album="album"
+          ></Disc>
+        </div>
+      </details>
+    </div>
+    <div class="main-cont forTitle">
+      <details>
+        <summary> <h2>Click to see just the albums you like!</h2></summary>
+        <p>
+          Epcot is a theme park at Walt Disney World Resort featuring exciting
+          attractions, international pavilions, award-winning fireworks and
+          seasonal special events.
+        </p>
+      </details>
     </div>
   </div>
 </template>
@@ -38,8 +53,14 @@
         axios
           .get('https://flynn.boolean.careers/exercises/api/array/music')
           .then(re => {
-            this.albums = re.data.response;
+            // aggiungere una proprità like ai dati
+            this.addLikeProp(re.data.response);
+            console.warn(re.data.response);
           });
+      },
+      addLikeProp(rowData) {
+        this.albums = rowData.map(obj => ({ ...obj, like: false }));
+        console.log(this.albums);
       },
     },
   };
@@ -57,6 +78,22 @@
   .header-logo {
     width: 6.5vh;
     padding-left: 10px;
+  }
+  // contenitore titolo
+  .main-cont.forTitle {
+    justify-content: flex-start;
+  }
+
+  h2 {
+    display: inline-block;
+  }
+  h2,
+  details {
+    color: $light-txt;
+  }
+
+  summary {
+    cursor: pointer;
   }
 
   // contenitore dischi

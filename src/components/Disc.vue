@@ -7,6 +7,16 @@
     <p>{{ album.author }}</p>
     <p>{{ album.year }}</p>
     <p>{{ album.genre }}</p>
+    <i
+      v-show="!album.like"
+      @click="album.like = !album.like"
+      class="far fa-star"
+    ></i>
+    <i
+      v-show="album.like"
+      @click="album.like = !album.like"
+      class="fas fa-star"
+    ></i>
   </div>
 </template>
 
@@ -23,6 +33,7 @@
   @import '@/scss/mixins';
 
   .wrap {
+    position: relative;
     text-align: center;
     img {
       width: 100%;
@@ -59,5 +70,12 @@
   }
   p:last-child {
     color: $light-txt;
+  }
+  i {
+    position: absolute;
+    left: 5%;
+    bottom: 4%;
+    color: $star;
+    cursor: pointer;
   }
 </style>

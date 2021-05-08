@@ -21,6 +21,5 @@
     background-color: $header-col;
     height: 9vh;
     @include flex(row, flex-start);
-    margin-bottom: 13vh;
   }
 </style>
