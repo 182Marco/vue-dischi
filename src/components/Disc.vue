@@ -37,14 +37,31 @@
 <script>
   export default {
     name: 'Disc',
-    props: ['album', 'showAll', 'select', 'deletedGroup'],
+    props: ['album', 'showAll', 'select', 'deletedGroup', 'searchedText'],
     methods: {
       DoWeShow() {
-        return (
+        // restrizione verbosità
+        const title = this.album.title.toLowerCase();
+        const author = this.album.author.toLowerCase();
+        const year = this.album.year.toLowerCase();
+        const genre = this.album.genre.toLowerCase();
+        const s = this.searchedText.toLowerCase();
+        // condizioni default se non cè ricerca
+        const defaultConditions =
           this.showAll === true ||
           (this.album.like && this.select === false) ||
-          this.select === this.album.genre
-        );
+          this.select === this.album.genre;
+        // condizioni di ricerca
+        const SearchcConditions =
+          title.includes(s) ||
+          author.includes(s) ||
+          year.includes(s) ||
+          genre.includes(s);
+        // ------------------------
+        if (this.searchedText === '') {
+          return defaultConditions;
+        }
+        return defaultConditions && SearchcConditions;
       },
       showDeletedOrNot() {
         if (!this.deletedGroup && this.album.deleted) {

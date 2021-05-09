@@ -1,14 +1,12 @@
 <template>
   <div>
-    <!-- <label for="search"
-      >Search for title,author or year to filrer albums in all the
-      sections:</label
-    > -->
     <input
+      v-model="searchedText"
       type="text"
       name=""
       id="search"
       placeholder="Search for title,author or year to filrer albums in all the sections:"
+      @keyup="$emit('changeText', searchedText)"
     />
   </div>
 </template>
@@ -16,8 +14,11 @@
 <script>
   export default {
     name: 'SearchComp',
-    // props: ['album'],
-    methods: {},
+    data() {
+      return {
+        searchedText: '',
+      };
+    },
   };
 </script>
 
@@ -39,11 +40,11 @@
     width: 100%;
     background-color: transparent;
     border: none;
-    border-bottom: 2px solid $light-txt;
+    border-bottom: 1px solid $brand;
     border-radius: $boderRadForInputs;
     &:focus {
       outline: none;
-      box-shadow: 0 3px 3px -2px $light-txt;
+      box-shadow: 0 2px 2px -1px $brand;
     }
   }
 

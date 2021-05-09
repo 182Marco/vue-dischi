@@ -2,7 +2,7 @@
   <div id="app">
     <HeaderComp class="header">
       <img class="header-logo" src="@/assets/logo.png" alt="logo" />
-      <SearchComp />
+      <SearchComp @changeText="searchedText = $event" />
     </HeaderComp>
     <div class="main-cont"></div>
     <div class="main-cont">
@@ -16,6 +16,7 @@
           class="disc-comp"
           :album="album"
           :showAll="true"
+          :searchedText="searchedText"
         ></Disc>
       </HideShow>
     </div>
@@ -34,6 +35,7 @@
           class="disc-comp"
           :album="album"
           :select="select"
+          :searchedText="searchedText"
         ></Disc>
       </HideShow>
     </div>
@@ -46,6 +48,7 @@
           :album="album"
           :select="false"
           :likeGroup="true"
+          :searchedText="searchedText"
         ></Disc>
       </HideShow>
     </div>
@@ -59,6 +62,7 @@
           :select="false"
           :showAll="true"
           :deletedGroup="true"
+          :searchedText="searchedText"
         ></Disc>
       </HideShow>
     </div>
@@ -88,7 +92,7 @@
         albums: [],
         generi: [],
         select: null,
-        search: '',
+        searchedText: '',
       };
     },
     created() {
@@ -99,7 +103,7 @@
         axios
           .get('https://flynn.boolean.careers/exercises/api/array/music')
           .then(re => {
-            // aggiungere una proprità like ai dati
+            // aggiungere una proprità like e una deleted ai dati
             this.addLikeProp(re.data.response);
             // ottenere array con solo generi senza ripetizioni
             this.createArOfGen(re.data.response);
