@@ -1,7 +1,7 @@
 <template>
   <div>
     <input
-      v-model="searchedText"
+      v-model.trim="searchedText"
       type="text"
       name=""
       id="search"
