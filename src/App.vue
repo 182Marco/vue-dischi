@@ -104,16 +104,16 @@
           .get('https://flynn.boolean.careers/exercises/api/array/music')
           .then(re => {
             // aggiungere una proprità like e una deleted ai dati
-            this.addLikeProp(re.data.response);
+            this.albums = this.addLikeProp(re.data.response);
             // ottenere array con solo generi senza ripetizioni
-            this.createArOfGen(re.data.response);
+            this.generi = this.createArOfGen(re.data.response);
           });
       },
       addLikeProp(rowData) {
-        this.albums = rowData.map(e => ({ ...e, like: false, deleted: false }));
+        return rowData.map(e => ({ ...e, like: false, deleted: false }));
       },
       createArOfGen(rowData) {
-        this.generi = rowData
+        return rowData
           .map(e => e.genre)
           .filter((e, i, a) => a.indexOf(e) === i);
       },
