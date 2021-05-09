@@ -16,6 +16,7 @@
   @import '@/scss/reset';
   @import '@/scss/mixins';
   div {
+    padding-right: 10px;
     background-color: $header-col;
     height: 9vh;
     @include flex(row, flex-start);
