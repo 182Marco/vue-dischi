@@ -1,12 +1,14 @@
 <template>
   <div class="comp-Cont">
+    <p class="precentage">{{ precentage }}%</p>
     <p>
       Loading . . .
-      <!-- si posta comprendo progressivamente i puntini per effetto progressione -->
+      <!-- span che si sposta comprendo progressivamente i puntini per effetto progressione -->
       <span></span>
     </p>
     <!-- barra caricamento -->
     <div class="loadingWrap">
+      <!-- scritta percentuale di caricamento sopra barra  -->
       <div class="increase bar"></div>
     </div>
   </div>
@@ -15,8 +17,20 @@
 <script>
   export default {
     name: 'Loading',
-    // props: ['album', 'showAll', 'select', 'deletedGroup', 'searchedText'],
-    methods: {},
+    data() {
+      return {
+        precentage: 0,
+        int: null,
+      };
+    },
+    created() {
+      this.int = setInterval(this.increasePerc, 43);
+    },
+    methods: {
+      increasePerc() {
+        this.precentage < 100 ? this.precentage++ : clearInterval(this.int);
+      },
+    },
   };
 </script>
 
@@ -26,7 +40,19 @@
   @import '@/scss/mixins';
 
   .comp-Cont {
+    position: relative;
     @include flex(column, center, center);
+  }
+  //   percentuale caricamento sopra la barra stessa
+  .precentage {
+    // creare un bordo intorno al testo
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    // ****************
+    position: absolute;
+    left: 50%;
+    bottom: 27%;
+    transform: translateX(-50%);
+    margin: 0;
   }
   .loadingWrap {
     @include width-height(40vw, 1vw);
@@ -42,7 +68,7 @@
   }
 
   .increase {
-    animation: increase 5s infinite;
+    animation: increase 5s;
   }
 
   @keyframes increase {
@@ -58,12 +84,14 @@
 
   p {
     // border: 1px solid white;
-    position: relative;
+    position: absolute;
+    left: 50%;
+    bottom: 80%;
+    transform: translateX(-50%);
     @include flex(row, center, center);
     color: $light-txt;
     font-size: 1.5rem;
     font-weight: 700;
-    margin: 1vh;
     span {
       position: absolute;
       bottom: 5px;
@@ -71,9 +99,11 @@
       display: inline-block;
       @include width-height(33px, 7px);
       background-color: $main-bg;
-      animation: cover-dot 1.6s infinite;
+      animation: cover-dot 1.6s linear infinite;
     }
   }
+
+  //   effetto progressione dei puntini
 
   @keyframes cover-dot {
     0% {
