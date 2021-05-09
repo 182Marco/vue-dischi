@@ -1,11 +1,8 @@
 <template>
   <div
-    v-show="
-      showAll === true ||
-        (album.like && select === false) ||
-        select === album.genre
-    "
     class="wrap"
+    v-show="DoWeShow()"
+    :class="{ deleted: showDeletedOrNot() }"
   >
     <div class="box-img">
       <img :src="album.poster" :alt="album.title" />
@@ -24,13 +21,39 @@
       @click="album.like = !album.like"
       class="fas fa-star"
     ></i>
+    <i
+      v-show="!album.deleted"
+      @click="album.deleted = !album.deleted"
+      class="far fa-trash-alt deletedIco"
+    ></i>
+    <i
+      v-show="album.deleted"
+      @click="album.deleted = !album.deleted"
+      class="fas fa-trash-restore deletedIco"
+    ></i>
   </div>
 </template>
 
 <script>
   export default {
     name: 'Disc',
-    props: ['album', 'showAll', 'select'],
+    props: ['album', 'showAll', 'select', 'deletedGroup'],
+    methods: {
+      DoWeShow() {
+        return (
+          this.showAll === true ||
+          (this.album.like && this.select === false) ||
+          this.select === this.album.genre
+        );
+      },
+      showDeletedOrNot() {
+        if (!this.deletedGroup && this.album.deleted) {
+          return true;
+        } else if (this.deletedGroup && !this.album.deleted) {
+          return true;
+        }
+      },
+    },
   };
 </script>
 
@@ -42,6 +65,9 @@
   .wrap {
     position: relative;
     text-align: center;
+    &.deleted {
+      display: none;
+    }
     img {
       width: 100%;
     }
@@ -84,5 +110,15 @@
     bottom: 4%;
     color: $star;
     cursor: pointer;
+    &:hover {
+      color: $starHover;
+    }
+    &.deletedIco {
+      left: 77%;
+      color: $grey-txt;
+      &:hover {
+        color: $white;
+      }
+    }
   }
 </style>

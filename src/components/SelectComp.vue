@@ -49,7 +49,7 @@
   }
 
   label {
-    font-size: 1.7rem;
+    font-size: $sectionFontSize;
     font-weight: bold;
     margin-right: 10px;
     color: $light-txt;
@@ -58,7 +58,7 @@
   select {
     width: 150px;
     height: 25px;
-    border-radius: 3px;
+    border-radius: $boderRadForInputs;
     padding-left: 10px;
     background-color: transparent;
     color: $light-txt;

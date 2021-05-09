@@ -2,16 +2,20 @@
   <div id="app">
     <HeaderComp class="header">
       <img class="header-logo" src="@/assets/logo.png" alt="logo" />
+      <SearchComp />
     </HeaderComp>
+    <div class="main-cont"></div>
     <div class="main-cont">
-      <HideShow class="HideShow" :title="'Click to see all your albums:'">
+      <HideShow
+        class="HideShow"
+        :title="'Click here to see all your albums(not deleted) :'"
+      >
         <Disc
           v-for="(album, i) in albums"
           :key="i"
           class="disc-comp"
           :album="album"
           :showAll="true"
-          :select="false"
         ></Disc>
       </HideShow>
     </div>
@@ -23,26 +27,38 @@
       <SelectComp @changeSelected="select = $event" :generi="generi" />
     </div>
     <div class="main-cont">
-      <HideShow :title="'Click to see only the genre you\'ve chosen:'">
+      <HideShow :title="'Click here to see only the genre you\'ve chosen:'">
         <Disc
           v-for="(album, i) in albums"
           :key="i"
           class="disc-comp"
           :album="album"
-          :showAll="false"
           :select="select"
         ></Disc>
       </HideShow>
     </div>
     <div class="main-cont">
-      <HideShow :title="'Click to see just the albums you like!'">
+      <HideShow :title="'Click here to see just the albums you like!'">
         <Disc
           v-for="(album, i) in albums"
           :key="i"
           class="disc-comp"
           :album="album"
-          :showAll="false"
           :select="false"
+          :likeGroup="true"
+        ></Disc>
+      </HideShow>
+    </div>
+    <div class="main-cont">
+      <HideShow :title="'Click here to see the albums  you\'ve  deleted'">
+        <Disc
+          v-for="(album, i) in albums"
+          :key="i"
+          class="disc-comp"
+          :album="album"
+          :select="false"
+          :showAll="true"
+          :deletedGroup="true"
         ></Disc>
       </HideShow>
     </div>
@@ -54,6 +70,7 @@
   import HeaderComp from '@/components/HeaderComp.vue';
   import SelectComp from '@/components/SelectComp.vue';
   import HideShow from '@/components/HideShow.vue';
+  import SearchComp from '@/components/SearchComp.vue';
 
   import axios from 'axios';
 
@@ -64,12 +81,14 @@
       HeaderComp,
       SelectComp,
       HideShow,
+      SearchComp,
     },
     data() {
       return {
         albums: [],
         generi: [],
         select: null,
+        search: '',
       };
     },
     created() {
@@ -87,7 +106,7 @@
           });
       },
       addLikeProp(rowData) {
-        this.albums = rowData.map(e => ({ ...e, like: false }));
+        this.albums = rowData.map(e => ({ ...e, like: false, deleted: false }));
       },
       createArOfGen(rowData) {
         this.generi = rowData
@@ -98,9 +117,6 @@
       // chngeSelection(slected) {
       //   this.select = slected;
       // },
-      prova() {
-        console.log(this.select);
-      },
     },
   };
 </script>
