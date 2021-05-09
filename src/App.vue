@@ -4,67 +4,75 @@
       <img class="header-logo" src="@/assets/logo.png" alt="logo" />
       <SearchComp @changeText="searchedText = $event" />
     </HeaderComp>
-    <div class="main-cont"></div>
-    <div class="main-cont">
-      <HideShow
-        class="HideShow"
-        :title="'Click here to see all your albums(not deleted) :'"
-      >
-        <Disc
-          v-for="(album, i) in albums"
-          :key="i"
-          class="disc-comp"
-          :album="album"
-          :showAll="true"
-          :searchedText="searchedText"
-        ></Disc>
-      </HideShow>
+    <div v-show="albums.length < 9 || !waitServerResponse">
+      <div class="loading-wrap">
+        <Loading class="loading" />
+      </div>
     </div>
-    <!-- x ricordare la sintassi quando copierò da mie vecchie repositories -->
-    <!-- VERSIONE CON FUNZIONE IN SCRIPT -->
-    <!-- <SelectComp @changeSelected="chngeSelection($event)" :generi="generi" /> -->
-    <!-- VERSIONE CON FUNZIONE DIRETTAMENTE IN HTML -->
-    <div class="main-cont">
-      <SelectComp @changeSelected="select = $event" :generi="generi" />
-    </div>
-    <div class="main-cont">
-      <HideShow :title="'Click here to see only the genre you\'ve chosen:'">
-        <Disc
-          v-for="(album, i) in albums"
-          :key="i"
-          class="disc-comp"
-          :album="album"
-          :select="select"
-          :searchedText="searchedText"
-        ></Disc>
-      </HideShow>
-    </div>
-    <div class="main-cont">
-      <HideShow :title="'Click here to see just the albums you like!'">
-        <Disc
-          v-for="(album, i) in albums"
-          :key="i"
-          class="disc-comp"
-          :album="album"
-          :select="false"
-          :likeGroup="true"
-          :searchedText="searchedText"
-        ></Disc>
-      </HideShow>
-    </div>
-    <div class="main-cont">
-      <HideShow :title="'Click here to see the albums  you\'ve  deleted'">
-        <Disc
-          v-for="(album, i) in albums"
-          :key="i"
-          class="disc-comp"
-          :album="album"
-          :select="false"
-          :showAll="true"
-          :deletedGroup="true"
-          :searchedText="searchedText"
-        ></Disc>
-      </HideShow>
+    <!-- aspettare a rendere true questa variabile per simulare attesa dati dal server -->
+    <div v-show="albums.length > 9 && waitServerResponse">
+      <div class="main-cont"></div>
+      <div class="main-cont">
+        <HideShow
+          class="HideShow"
+          :title="'Click here to see all your albums(not deleted) :'"
+        >
+          <Disc
+            v-for="(album, i) in albums"
+            :key="i"
+            class="disc-comp"
+            :album="album"
+            :showAll="true"
+            :searchedText="searchedText"
+          ></Disc>
+        </HideShow>
+      </div>
+      <!-- x ricordare la sintassi quando copierò da mie vecchie repositories -->
+      <!-- VERSIONE CON FUNZIONE IN SCRIPT -->
+      <!-- <SelectComp @changeSelected="chngeSelection($event)" :generi="generi" /> -->
+      <!-- VERSIONE CON FUNZIONE DIRETTAMENTE IN HTML -->
+      <div class="main-cont">
+        <SelectComp @changeSelected="select = $event" :generi="generi" />
+      </div>
+      <div class="main-cont">
+        <HideShow :title="'Click here to see only the genre you\'ve chosen:'">
+          <Disc
+            v-for="(album, i) in albums"
+            :key="i"
+            class="disc-comp"
+            :album="album"
+            :select="select"
+            :searchedText="searchedText"
+          ></Disc>
+        </HideShow>
+      </div>
+      <div class="main-cont">
+        <HideShow :title="'Click here to see just the albums you like!'">
+          <Disc
+            v-for="(album, i) in albums"
+            :key="i"
+            class="disc-comp"
+            :album="album"
+            :select="false"
+            :likeGroup="true"
+            :searchedText="searchedText"
+          ></Disc>
+        </HideShow>
+      </div>
+      <div class="main-cont">
+        <HideShow :title="'Click here to see the albums  you\'ve  deleted'">
+          <Disc
+            v-for="(album, i) in albums"
+            :key="i"
+            class="disc-comp"
+            :album="album"
+            :select="false"
+            :showAll="true"
+            :deletedGroup="true"
+            :searchedText="searchedText"
+          ></Disc>
+        </HideShow>
+      </div>
     </div>
   </div>
 </template>
@@ -75,6 +83,7 @@
   import SelectComp from '@/components/SelectComp.vue';
   import HideShow from '@/components/HideShow.vue';
   import SearchComp from '@/components/SearchComp.vue';
+  import Loading from '@/components/Loading.vue';
 
   import axios from 'axios';
 
@@ -86,6 +95,7 @@
       SelectComp,
       HideShow,
       SearchComp,
+      Loading,
     },
     data() {
       return {
@@ -93,10 +103,16 @@
         generi: [],
         select: null,
         searchedText: '',
+        /* aspettare a rendere true questa
+        variabile per simulare attesa dati
+        dal server*/
+        waitServerResponse: false,
       };
     },
     created() {
       this.getDisc();
+      /* aspettare a rendere true questa variabile per simulare attesa dati dal server*/
+      setTimeout(this.timeforServerToLoad, 5000);
     },
     methods: {
       getDisc() {
@@ -121,6 +137,11 @@
       // chngeSelection(slected) {
       //   this.select = slected;
       // },
+      /* aspettare a rendere true questa variabile per simulare attesa dati dal server
+      (funz chiamata al created con setTimeOut)*/
+      timeforServerToLoad() {
+        this.waitServerResponse = true;
+      },
     },
   };
 </script>
@@ -142,6 +163,11 @@
   .header-logo {
     width: 6.5vh;
     padding-left: 10px;
+  }
+
+  .loading-wrap {
+    @include flex(row, center, center);
+    height: 50vh;
   }
 
   h2 {
