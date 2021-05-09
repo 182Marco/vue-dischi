@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <label for="choseType">Choose a musical genre</label>
     <div class="wrap">
       <select
@@ -11,7 +11,6 @@
         <option v-for="(e, i) in generi" :key="i">{{ e }}</option>
       </select>
     </div>
-    <button @click="prova">vediamo la scelta</button>
   </div>
 </template>
 
@@ -24,11 +23,6 @@
         selected: '',
       };
     },
-    methods: {
-      prova() {
-        console.log(this.selected);
-      },
-    },
   };
 </script>
 
@@ -37,12 +31,8 @@
   @import '@/scss/reset';
   @import '@/scss/mixins';
 
-  .container {
-    margin: 7vh 0 4vh;
-  }
-
   div {
-    @include flex(row, center, center);
+    @include flex(row, flex-start, center);
     .wrap {
       position: relative;
       background-color: rgba(255, 255, 255, 0.082);
@@ -59,6 +49,8 @@
   }
 
   label {
+    font-size: 1.7rem;
+    font-weight: bold;
     margin-right: 10px;
     color: $light-txt;
   }

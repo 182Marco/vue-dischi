@@ -22,6 +22,7 @@
   @import '@/scss/mixins';
 
   h2 {
+    font-size: 1.7rem;
     display: inline-block;
   }
   h2,

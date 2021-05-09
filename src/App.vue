@@ -1,25 +1,40 @@
 <template>
   <div id="app">
-    <HeaderComp>
+    <HeaderComp class="header">
       <img class="header-logo" src="@/assets/logo.png" alt="logo" />
     </HeaderComp>
-    <!-- x ricordare la sintassi quando copierò da mie vecchie repositories -->
-    <!-- VERSIONE CON FUNZIONE IN SCRIPT -->
-    <!-- <SelectComp @changeSelected="chngeSelection($event)" :generi="generi" /> -->
-    <!-- VERSIONE CON FUNZIONE DIRETTAMENTE IN HTML -->
-    <SelectComp @changeSelected="select = $event" :generi="generi" />
-    <div class="main-cont forTitle">
-      <HideShow :title="'Click to see all your albums:'">
+    <div class="main-cont">
+      <HideShow class="HideShow" :title="'Click to see all your albums:'">
         <Disc
           v-for="(album, i) in albums"
           :key="i"
           class="disc-comp"
           :album="album"
           :showAll="true"
+          :select="false"
         ></Disc>
       </HideShow>
     </div>
-    <div class="main-cont forTitle">
+    <!-- x ricordare la sintassi quando copierò da mie vecchie repositories -->
+    <!-- VERSIONE CON FUNZIONE IN SCRIPT -->
+    <!-- <SelectComp @changeSelected="chngeSelection($event)" :generi="generi" /> -->
+    <!-- VERSIONE CON FUNZIONE DIRETTAMENTE IN HTML -->
+    <div class="main-cont">
+      <SelectComp @changeSelected="select = $event" :generi="generi" />
+    </div>
+    <div class="main-cont">
+      <HideShow :title="'Click to see only the genre you\'ve chosen:'">
+        <Disc
+          v-for="(album, i) in albums"
+          :key="i"
+          class="disc-comp"
+          :album="album"
+          :showAll="false"
+          :select="select"
+        ></Disc>
+      </HideShow>
+    </div>
+    <div class="main-cont">
       <HideShow :title="'Click to see just the albums you like!'">
         <Disc
           v-for="(album, i) in albums"
@@ -27,12 +42,10 @@
           class="disc-comp"
           :album="album"
           :showAll="false"
+          :select="false"
         ></Disc>
       </HideShow>
     </div>
-    <button @click="prova">
-      vediamo se ha funzionato il cazzo di emit
-    </button>
   </div>
 </template>
 
@@ -101,13 +114,14 @@
   @import '@/scss/reset';
   @import '@/scss/mixins';
 
+  .header,
+  .HideShow {
+    margin-bottom: 5.5vh;
+  }
+
   .header-logo {
     width: 6.5vh;
     padding-left: 10px;
-  }
-  // contenitore titolo
-  .main-cont.forTitle {
-    justify-content: flex-start;
   }
 
   h2 {
@@ -126,7 +140,7 @@
   .main-cont {
     width: 93vw;
     margin: auto;
-    @include flex(row, center, flex-start);
+    @include flex(row, flex-start, flex-start);
     flex-wrap: wrap;
   }
   // componente disco
